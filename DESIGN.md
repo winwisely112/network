@@ -2,6 +2,9 @@
 
 Wireguard to get onto the network. It may be that we cant use this becaue it undermins webrtc
 
+For V1 we make all calls to the Servers, to make things SIMPLE.
+For V2, we hold data on the devices, and update them using PUB SUB mailboxex
+
 Webrtc is used to allow P2P connections.
 
 Data
