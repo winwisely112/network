@@ -39,20 +39,14 @@ code:
 dep:
 	# none
 
-### local
-
-export PORT=8080
-run-api:
-	cd $(LIB_FSPATH)/cmd/api && go run .
-
-run-cli:
-	cd $(LIB_FSPATH)/cmd/cli && go run . -name joe
 
 ### cloud
 
 cloud-auth:
 	gcloud auth login
 	gcloud config set project $(CLOUD_PROJECT_ID)
+
+	gcloud config set run/region europe-west1
 cloud-open:
 	# run
 	open https://console.cloud.google.com/run?project=$(CLOUD_PROJECT_ID)
@@ -65,3 +59,26 @@ cloud-build:
 	cd $(LIB_FSPATH) && gcloud builds submit --tag gcr.io/$(CLOUD_PROJECT_ID)/identicon-generator
 cloud-deploy:
 	cd $(LIB_FSPATH) && gcloud beta run deploy --image gcr.io/$(CLOUD_PROJECT_ID)/identicon-generator --platform managed
+
+# URL from cloud-deploy
+CLOUD_PROJECT_URL=https://identicon-generator-ts4lgtxcbq-ew.a.run.app
+
+cloud-client-get:
+	# works
+	curl $(CLOUD_PROJECT_URL)/identicon/generate?name=joe1
+
+
+
+### local
+
+export PORT=8080
+local-serve:
+	# works
+	cd $(LIB_FSPATH)/cmd/api && go run .
+
+local-client-get:
+	# works
+	cd $(LIB_FSPATH)/cmd/cli && go run . -name joe
+	
+
+
