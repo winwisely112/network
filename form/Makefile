@@ -2,7 +2,7 @@
 
 
 LIB_NAME=network
-LIB=github.com/$(LIB_NAME)
+LIB=github.com/winwisely99/$(LIB_NAME)
 LIB_BRANCH=master
 LIB_FSPATH=$(GOPATH)/src/$(LIB)
 
@@ -82,7 +82,7 @@ cloud-client-get:
 export PORT=8080
 local-serve:
 	# works
-	cd $(SAMPLE_FSPATH) && go run main.go
+	cd $(SAMPLE_FSPATH) && go run .
 
 local-client-get:
 	# works

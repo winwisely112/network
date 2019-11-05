@@ -1,4 +1,4 @@
-module github.com/network/form
+module github.com/winwisely99/network/form
 
 go 1.13
 
