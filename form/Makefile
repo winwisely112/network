@@ -26,7 +26,6 @@ print: ## print
 	@echo LIB_FSPATH: $(LIB_FSPATH)
 	@echo
 
-
 	@echo
 	@echo SAMPLE_NAME: $(SAMPLE_NAME)
 	@echo SAMPLE_FSPATH: $(SAMPLE_FSPATH)
@@ -83,11 +82,11 @@ cloud-client-get:
 export PORT=8080
 local-serve:
 	# works
-	cd $(LIB_FSPATH)/cmd/api && go run .
+	cd $(SAMPLE_FSPATH) && go run .
 
 local-client-get:
 	# works
-	cd $(LIB_FSPATH)/cmd/cli && go run . -name joe
+	cd $(SAMPLE_FSPATH)/cmd/cli && go run . -name joe
 	
 
 
