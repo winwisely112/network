@@ -4,12 +4,21 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"text/template"
 
 	"github.com/go-playground/form"
 )
 
 var decoder *form.Decoder
+
+func getEnvOr(key string, orValue string) string {
+	val := os.Getenv(key)
+	if val == "" {
+		return orValue
+	}
+	return val
+}
 
 // UserDTO get user details for signup
 type UserDTO struct {
@@ -25,16 +34,20 @@ func signup(w http.ResponseWriter, r *http.Request) {
 
 		decoder = form.NewDecoder()
 		v := r.PostForm
-		fmt.Println(v)
+
+		//fmt.Println(v)
+		log.Printf("v %v:", v)
 		err := decoder.Decode(&user, v)
 		if err != nil {
 			log.Panic(err)
 		}
 
-		fmt.Println("v:", user.UserName)
+		log.Printf("user.UserName %s:", user.UserName)
 	}
 
 	fmt.Fprintf(w, "Welcome "+user.FirstName) // write data to response
+	log.Printf(format string, v ...interface{})
+	log.Printf("user.UserName %s:", user.UserName)
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
@@ -42,6 +55,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, nil)
 }
 func main() {
+
 	http.HandleFunc("/", login) // setting router rule
 	http.HandleFunc("/signup", signup)
 	err := http.ListenAndServe(":8080", nil) // setting listening port

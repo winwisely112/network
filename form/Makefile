@@ -1,17 +1,15 @@
 # github.com/winwisely99/network/form
 
+# ALL VARS get overidden in your own "env.mk"
 
-LIB_NAME=network
-LIB=github.com/winwisely99/$(LIB_NAME)
-LIB_BRANCH=master
-LIB_FSPATH=$(GOPATH)/src/$(LIB)
+SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
-GO111MODULE=on
+# Grab necessary submodules, in case the repo was cloned without --recursive
+#$(SELF_DIR)/.ci/common.mk:
+#	git submodule update --init --recursive
 
-SAMPLE_NAME=form
-SAMPLE_FSPATH=$(LIB_FSPATH)/$(SAMPLE_NAME)
-
-CLOUD_PROJECT_ID=winwisely-cloudrun-form
+# Incldue your env.mk
+include $(SELF_DIR)/env.mk
 
 
 help:  ## Display this help
@@ -67,9 +65,7 @@ cloud-build:
 cloud-deploy:
 	cd $(LIB_FSPATH) && gcloud beta run deploy --image gcr.io/$(CLOUD_PROJECT_ID)/identicon-generator --platform managed
 
-# URL from cloud-deploy
-CLOUD_PROJECT_URL=????
-#CLOUD_PROJECT_URL=????https://identicon-generator-ts4lgtxcbq-ew.a.run.app
+
 
 cloud-client-get:
 	# works
@@ -82,10 +78,10 @@ cloud-client-get:
 export PORT=8080
 local-serve:
 	# works
-	cd $(SAMPLE_FSPATH) && go run .
+	cd $(SAMPLE_FSPATH)/cmd/api && go run .
 
 local-client-get:
-	# works
+	# TODO for testing
 	cd $(SAMPLE_FSPATH)/cmd/cli && go run . -name joe
 	
 
