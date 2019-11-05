@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	// "github.com/winwisely99/network/form"
+	// "github.com/winwisely99/network/cloud/forms/type"
 )
 
 var welcomeSignature = `

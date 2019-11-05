@@ -6,10 +6,12 @@ import (
 	"os"
 	"text/template"
 
+
+	"github.com/winwisely99/network/cloud/forms/type"
+
 	"github.com/go-playground/form"
 
-	// "github.com/winwisely99/network/form/type"
-	"github.com/winwisely99/network/form/type"
+	
 )
 
 var decoder *form.Decoder
