@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -35,7 +34,6 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		decoder = form.NewDecoder()
 		v := r.PostForm
 
-		//fmt.Println(v)
 		log.Printf("v %v:", v)
 		err := decoder.Decode(&user, v)
 		if err != nil {
@@ -45,9 +43,10 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		log.Printf("user.UserName %s:", user.UserName)
 	}
 
-	fmt.Fprintf(w, "Welcome "+user.FirstName) // write data to response
-	log.Printf(format string, v ...interface{})
-	log.Printf("user.UserName %s:", user.UserName)
+	// now that you have collected the values from the HTTP Form post
+	// send the values to the form.
+	// you need to move the user UserDTO to "types" folder because everyones needs them.
+
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
