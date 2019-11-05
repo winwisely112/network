@@ -68,7 +68,8 @@ cloud-deploy:
 
 
 cloud-client-get:
-	# works
+	# Change to use a HTTP Request that hits the API running on the cloud
+	# Request needs to be a Http Form post
 	curl $(CLOUD_PROJECT_URL)/identicon/generate?name=joe1
 
 
