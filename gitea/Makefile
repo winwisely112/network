@@ -1,4 +1,4 @@
-# github.com/winwisely99/network/form
+
 
 # ALL VARS get overidden in your own "env.mk"
 
@@ -29,10 +29,19 @@ print: ## print
 	@echo SAMPLE_FSPATH: $(SAMPLE_FSPATH)
 	@echo
 
+	@echo
+	@echo CLOUD_PROJECT_ID: $(CLOUD_PROJECT_ID)
+	@echo CLOUD_PROJECT_URL: $(CLOUD_PROJECT_URL)
+	
+	@echo
+
 git-clone:
 	mkdir -p $(LIB_FSPATH)
 	cd $(LIB_FSPATH) && cd .. && rm -rf $(LIB_NAME) && git clone ssh://git@$(LIB).git
-	cd $(LIB_FSPATH) && git checkout $(LIB_BRANCH)
+	#cd $(LIB_FSPATH) && git checkout $(LIB_BRANCH)
+	cd $(LIB_FSPATH) && git checkout tags/$(LIB_TAG)
+
+	cd $(LIB_FSPATH) && git status
 git-pull:
 	cd $(LIB_FSPATH) && git pull
 git-clean:
@@ -43,6 +52,9 @@ code:
 
 dep:
 	# none
+
+test:
+	go test -v ./...
 
 
 ### cloud
@@ -66,24 +78,19 @@ cloud-deploy:
 	cd $(LIB_FSPATH) && gcloud beta run deploy --image gcr.io/$(CLOUD_PROJECT_ID)/identicon-generator --platform managed
 
 
-
-cloud-client-get:
-	# Change to use a HTTP Request that hits the API running on the cloud
-	# Request needs to be a Http Form post
-	curl $(CLOUD_PROJECT_URL)/identicon/generate?name=joe1
-
-
-
 ### local
 
-export PORT=8080
-local-serve:
-	# works
-	cd $(SAMPLE_FSPATH)/cmd/api && go run .
+local-dep:
+	cd $(LIB_FSPATH) && make install
 
-local-client-get:
-	# TODO for testing
-	cd $(SAMPLE_FSPATH)/cmd/cli && go run . -name joe
+local-build: ## local-build
+	cd $(LIB_FSPATH) && TAGS="bindata" make generate all
+
+local-run: ## local-run
+	cd $(LIB_FSPATH) && ./gitea web
+local-open:
+	open http://localhost:3000/
+	
 	
 
 
