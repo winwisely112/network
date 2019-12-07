@@ -36,3 +36,8 @@ https://github.com/blokadaorg/blokada
 - android using rusts boringtun
 
 
+
+
+
+https://medium.com/mysterium-network/golang-c-interoperability-caf0ba9f7bf3
+https://github.com/mysteriumnetwork/node/tree/master/mobile/mysterium
