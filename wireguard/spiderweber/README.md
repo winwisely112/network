@@ -10,6 +10,7 @@ wasp = admin cli
 
 - uses GRPC, so we can then make a GUI Management API using Flutter
 - In order to support Flutter Web, we probably have to start to use the GRPC gateway.
+  - see: https://medium.com/swlh/rest-over-grpc-with-grpc-gateway-for-go-9584bfcbb835
 
 ---
 
@@ -31,9 +32,18 @@ spider = wiregiard server ops.
 - connects to ETCD to get the "knots - wg-servers"
 
 
-# TODO
+# 
+
+* Not ordered yet.
+
+- Convert all bash scripts to use mage to make it solid cross platform.
+  - Its not many scripts.
 
 - A docker compose to we can all run the bits locally.
+  - Can also just use KO, since its all golang and we get free Kubernetes.
+    - See: https://github.com/google/ko
 
-- A K8 to run this way. ETDC can then scale globally.
+- GRPC AND Protobug code gen in KNOTS repo.
+
+
 
