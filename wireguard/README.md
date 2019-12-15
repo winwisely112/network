@@ -1,27 +1,13 @@
-# wireguard
+# notes
 
-Only way to allow Iran and China and Russia to connect
+All code is here:
+https://github.com/spiderweber
 
-Client must be embedded in the app. We can do this because its go
+See the spiderweber folder
 
+## Roadmap
 
+1. The repos have docker files
 
-https://github.com/WireGuard
+- Can we host on Kubernetes ? Not sure as K8 is often different.
 
-## GUI
-https://github.com/subspacecloud/subspace
-- Server GUI
-- pure go 
-
-https://github.com/EmbarkStudios/wireguard-ui
-- Client GUI
-- go & svelte (npm) 
-
-## k8
-
-We will need to run a large global set of servers and so k8 is perfect and allows us to run anywhere
-
-https://github.com/squat/kilo
-video: https://www.youtube.com/watch?v=iPz_DAOOCKA
-- Make a full mesh between the servers
-- SO a Client can access ANY server no matter where it is.
