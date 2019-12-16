@@ -38,6 +38,7 @@ spider = wiregiard server ops.
 
 - Convert all bash scripts to use mage to make it solid cross platform.
   - Its not many scripts.
+  - 
 
 - A docker compose to we can all run the bits locally.
   - Can also just use KO, since its all golang and we get free Kubernetes.

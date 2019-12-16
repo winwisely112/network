@@ -1,0 +1,18 @@
+name: ducene
+description: An instant search library for Dart.
+version: 0.6.0-dev
+authors:
+- Shinichiro Abe <shinichiro.abe.1@gmail.com>
+homepage: https://bitbucket.org/ouava/ducene
+
+environment:
+  sdk: '>=1.24.0 <2.0.0'
+
+dependencies:
+  bit_set: ^0.1.0
+  firebase: ^3.2.0
+  sembast: ^1.3.7
+  lzma: "^0.3.0"
+
+dev_dependencies:
+  test: '>=0.12.0 <0.13.0'
