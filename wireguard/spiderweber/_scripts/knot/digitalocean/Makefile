@@ -24,8 +24,12 @@ GO_ARCH		:= $(shell go env GOARCH)
 
 # Project 
 DIGITALOCEAN_CONTEXT=winwisely99
+DIGITALOCEAN_SSH_FSPATH=/Users/apple/.ssh/winwisely99_digitalocean
 
+DIGITALOCEAN_KNOT_SRV_NAME=winwisely99-vpn-knot
+DIGITALOCEAN_KNOT_DOMAIN=winwisely99.knot.vpn.getcouragenow.org
 
+#DIGITALOCEAN_SPIDER_SRV_NAME=winwisely99-vpn-spider
 
 help:  ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
@@ -57,6 +61,9 @@ print: ## print
 
 	@echo
 	@echo DIGITALOCEAN_CONTEXT: $(DIGITALOCEAN_CONTEXT)
+	@echo DIGITALOCEAN_SSH_FSPATH: $(DIGITALOCEAN_SSH_FSPATH)
+	@echo DIGITALOCEAN_KNOT_SRV_NAME: $(DIGITALOCEAN_KNOT_SRV_NAME)
+	@echo DIGITALOCEAN_KNOT_DOMAIN: $(DIGITALOCEAN_KNOT_DOMAIN)
 	@echo
 
 
@@ -117,8 +124,17 @@ context-list: ## context-list
 context-set: ## context-set
 	doctl auth switch --context $(DIGITALOCEAN_CONTEXT) 
 
-account: ## account
+## ACCOUNT
+account-get: ## account-get
 	doctl account get
+
+## COMPUTE
+comp-list: ## comp-list
+	# show the servers up
+	doctl compute droplet list
+comp-connect: ## comp-connect
+	# connect to a server over ssh
+	doctl compute ssh $(DIGITALOCEAN_KNOT_SRV_NAME) --ssh-key-path $(DIGITALOCEAN_SSH_FSPATH)
 
 
 
