@@ -1,5 +1,14 @@
 # spiderweb
 
+
+## Hosting
+
+https://console.cloud.google.com/compute/instances?folder=&organizationId=&project=winwisely99-vpn
+
+- See _scripts / boot.sh file that has the gcloud command for each instance
+
+## Instances
+
 nest = docs
 
 - TODO: Make it use hugo and have a Web Server host it, so it can be docker deployed.
@@ -32,19 +41,22 @@ spider = wiregiard server ops.
 - connects to ETCD to get the "knots - wg-servers"
 
 
-# 
+# TODO
 
 * Not ordered yet.
 
 - Convert all bash scripts to use mage to make it solid cross platform.
-  - Its not many scripts.
-  - 
+    - Its not many scripts.
 
-- A docker compose to we can all run the bits locally.
-  - Can also just use KO, since its all golang and we get free Kubernetes.
-    - See: https://github.com/google/ko
+- Use go fish for deployment ? Can then deploy once and then have all instances update when a github release occurs using "gofish update"
+    - https://gofi.sh/index.html
+    - With all scripts also packaged using mage then it all all be a single binary always.
 
-- GRPC AND Protobug code gen in KNOTS repo.
+- A docker compose to we can all run the bits locally ? do we need docker for this ?
+    - Can also just use KO, since its all golang and we get free Kubernetes.
+        - See: https://github.com/google/ko
+
+- GRPC AND Protobug code gen in KNOTS makefile.
 
 
 
