@@ -1,0 +1,18 @@
+# https://github.com/pingcap/tidb/tree/v3.0.7
+LIB_NAME=tidb
+LIB=github.com/pingcap/$(LIB_NAME)
+LIB_BRANCH=master
+LIB_TAG=v3.0.7
+LIB_FSPATH=$(GOPATH)/src/$(LIB)
+
+LIB_BIN_NAME=$(LIB_NAME)-server
+LIB_BIN_FSPATH=$(GOPATH)/bin/$(LIB_BIN_NAME)
+
+GO111MODULE=on
+
+SAMPLE_NAME=
+SAMPLE_FSPATH=$(LIB_FSPATH)/$(SAMPLE_NAME)
+
+CLOUD_PROJECT_ID=
+CLOUD_PROJECT_URL=
+
