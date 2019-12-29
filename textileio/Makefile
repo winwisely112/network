@@ -1,18 +1,13 @@
+# https://github.com/textileio/go-threads
 
-# https://github.com/spiderweber/knot
-
-LIB_NAME=knot
-LIB=github.com/spiderweber/$(LIB_NAME)
+LIB_NAME=go-threads
+LIB=github.com/textileio/$(LIB_NAME)
 LIB_BRANCH=master
+LIB_TAG=v0.37.0
 LIB_FSPATH=$(GOPATH)/src/$(LIB)
 
-LIB_BIN_NAME=wg-server
+LIB_BIN_NAME=$(LIB_NAME)
 LIB_BIN_FSPATH=$(GOPATH)/bin/$(LIB_BIN_NAME)
-
-GO111MODULE=on
-
-CLOUD_PROJECT_ID=winwisely-wireguard
-
 
 help:  ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
@@ -20,11 +15,12 @@ help:  ## Display this help
 
 print: ## print
 	@echo
+	@echo $(OS)
 	@echo LIB_NAME: $(LIB_NAME)
 	@echo LIB: $(LIB)
 	@echo LIB_BRANCH: $(LIB_BRANCH)
+	@echo LIB_BRANCH: $(LIB_TAG)
 	@echo LIB_FSPATH: $(LIB_FSPATH)
-	@echo
 
 	@echo
 	@echo LIB_BIN_NAME: $(LIB_BIN_NAME)
@@ -34,7 +30,11 @@ print: ## print
 git-clone:
 	mkdir -p $(LIB_FSPATH)
 	cd $(LIB_FSPATH) && cd .. && rm -rf $(LIB_NAME) && git clone ssh://git@$(LIB).git
+git-clone-master: git-clone ## git-clone-master
 	cd $(LIB_FSPATH) && git checkout $(LIB_BRANCH)
+git-clone-tag: git-clone ## git-clone-tag
+	cd $(LIB_FSPATH) && git checkout tags/$(LIB_TAG)
+	cd $(LIB_FSPATH) && git status
 git-pull:
 	cd $(LIB_FSPATH) && git pull
 git-clean:
@@ -43,33 +43,38 @@ git-clean:
 code:
 	code $(LIB_FSPATH)
 
-dep:
-	# none
+os-dep:
+# TODO: Maybe best to move this to the general bootstrapper ?
+ifeq ($(OS),Windows_NT)
+	# install 
+	scoop install docker
+else 
+	UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	# linux
+	#apt install libglfw
+endif
+ifeq ($(UNAME_S),Darwin)
+	# glfw
+	# mac
+	brew install glfw
+	# docker for cross compile
+	# the client
+	brew install docker
+	# the dmg
+	brew cask install docker
+endif
+endif
 
-build:
+build: ## build
+	# builds into GO BIN
 	cd $(LIB_FSPATH) && go build -o $(LIB_BIN_FSPATH) .
-run:
-	$(LIB_BIN_FSPATH)
-docker-build:
-	cd $(LIB_FSPATH) && chmod +x *.sh
-	cd $(LIB_FSPATH) && ./.docker-build.sh
-docker-run:
-	
-docker-deploy:
-	# where 
-	
 
-export KO_DOCKER_REPO=gcr.io/triggermesh
-ko-dep:
-	GO111MODULE=on go get github.com/google/ko/cmd/ko
-	ko version
+build-clean: ## build-clean
+	rm $(LIB_BIN_FSPATH)
 
-ko-build:
-	# cp config in
-	mkdir -p $(LIB_FSPATH)/config
-	cp ./config/deploy.yaml $(LIB_FSPATH)/config
-	# build it
-	cd $(LIB_FSPATH) && ko apply -f config/
+
+
 
 
 
