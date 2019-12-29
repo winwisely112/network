@@ -32,16 +32,15 @@ print: ## print
 
 	@echo
 	@echo TOOLS:
-	@echo LIB_BIN_CTL_NAME: $(LIB_BIN_CTL_NAME)
-	@echo LIB_BIN_CTL_FSPATH: $(LIB_BIN_CTL_FSPATH)
+	@echo LIB_BIN_BENCHKV_NAME: $(LIB_BIN_BENCHKV_NAME)
+	@echo LIB_BIN_BENCHKV_FSPATH: $(LIB_BIN_BENCHKV_FSPATH)
 	@echo
-	@echo LIB_BIN_RECOVER_NAME: $(LIB_BIN_RECOVER_NAME)
-	@echo LIB_BIN_RECOVER_FSPATH: $(LIB_BIN_RECOVER_FSPATH)
+	@echo LIB_BIN_BENCHDB_NAME: $(LIB_BIN_BENCHDB_NAME)
+	@echo LIB_BIN_BENCHDB_FSPATH: $(LIB_BIN_BENCHDB_FSPATH)
 	@echo
-	@echo LIB_BIN_BENCH_NAME: $(LIB_BIN_BENCH_NAME)
-	@echo LIB_BIN_BENCH_FSPATH: $(LIB_BIN_BENCH_FSPATH)
+	@echo LIB_BIN_IMPORTER_NAME: $(LIB_BIN_IMPORTER_NAME)
+	@echo LIB_BIN_IMPORTER_FSPATH: $(LIB_BIN_IMPORTER_FSPATH)
 	@echo
-
 
 	@echo
 	@echo SAMPLE_NAME: $(SAMPLE_NAME)
@@ -78,7 +77,14 @@ code:
 	code $(LIB_FSPATH)
 
 dep:
-	# none
+	# rust !
+	# install rust
+	# https://forge.rust-lang.org/infra/other-installation-methods.html
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	# update it
+	rustup update
+
+	# If Windows then: https://static.rust-lang.org/rustup/dist/i686-pc-windows-gnu/rustup-init.exe
 
 test:
 	go test -v ./...
@@ -112,10 +118,7 @@ local-dep:
 
 local-build: ## local-build
 	cd $(LIB_FSPATH) && $(MAKE) 
-	cp $(LIB_FSPATH)/bin/* $(GOPATH)/bin
-
-	#it compiles all tools so just copy the all.
-	ls $(GOPATH)/bin/pd-*
+	
 
 local-run: ## local-run
 	$(LIB_BIN_FSPATH)
@@ -123,6 +126,27 @@ local-run: ## local-run
 local-open:
 	# Is there a Web Admin ?
 	open http://localhost:3000/
+
+### local-tools
+
+local-tools-build: ## local-tools-build
+	## benchkv
+	cd $(LIB_FSPATH) && $(MAKE) benchkv
+	cp $(LIB_FSPATH)/bin/benchkv $(LIB_BIN_BENCHKV_FSPATH)
+
+	which $(LIB_BIN_BENCHKV_NAME)
+
+	## benchdb
+	cd $(LIB_FSPATH) && $(MAKE) benchdb
+	cp $(LIB_FSPATH)/bin/benchdb $(LIB_BIN_BENCHDB_FSPATH)
+
+	which $(LIB_BIN_BENCHDB_NAME)
+
+	## importer
+	cd $(LIB_FSPATH) && $(MAKE) importer
+	cp $(LIB_FSPATH)/bin/importer $(LIB_BIN_IMPORTER_FSPATH)
+
+	which $(LIB_BIN_IMPORTER_NAME)
 
 
 
