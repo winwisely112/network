@@ -25,8 +25,21 @@ print: ## print
 	@echo
 
 	@echo
+	@echo SERVER:
 	@echo LIB_BIN_NAME: $(LIB_BIN_NAME)
 	@echo LIB_BIN_FSPATH: $(LIB_BIN_FSPATH)
+	@echo
+
+	@echo
+	@echo TOOLS:
+	@echo LIB_BIN_BENCHKV_NAME: $(LIB_BIN_BENCHKV_NAME)
+	@echo LIB_BIN_BENCHKV_FSPATH: $(LIB_BIN_BENCHKV_FSPATH)
+	@echo
+	@echo LIB_BIN_BENCHDB_NAME: $(LIB_BIN_BENCHDB_NAME)
+	@echo LIB_BIN_BENCHDB_FSPATH: $(LIB_BIN_BENCHDB_FSPATH)
+	@echo
+	@echo LIB_BIN_IMPORTER_NAME: $(LIB_BIN_IMPORTER_NAME)
+	@echo LIB_BIN_IMPORTER_FSPATH: $(LIB_BIN_IMPORTER_FSPATH)
 	@echo
 
 	@echo
@@ -100,13 +113,36 @@ local-build: ## local-build
 	cd $(LIB_FSPATH) && $(MAKE) 
 	cp $(LIB_FSPATH)/bin/tidb-server $(LIB_BIN_FSPATH)
 
-	which $(LIB_BIN_NAME)
-
 local-run: ## local-run
 	$(LIB_BIN_FSPATH)
 
 local-open:
+	# Is there a Web Admin ?
 	open http://localhost:3000/
+
+### local-tools
+
+local-tools-build: ## local-tools-build
+	## benchkv
+	cd $(LIB_FSPATH) && $(MAKE) benchkv
+	cp $(LIB_FSPATH)/bin/benchkv $(LIB_BIN_BENCHKV_FSPATH)
+
+	which $(LIB_BIN_BENCHKV_NAME)
+
+	## benchdb
+	cd $(LIB_FSPATH) && $(MAKE) benchdb
+	cp $(LIB_FSPATH)/bin/benchdb $(LIB_BIN_BENCHDB_FSPATH)
+
+	which $(LIB_BIN_BENCHDB_NAME)
+
+	## importer
+	cd $(LIB_FSPATH) && $(MAKE) importer
+	cp $(LIB_FSPATH)/bin/importer $(LIB_BIN_IMPORTER_FSPATH)
+
+	which $(LIB_BIN_IMPORTER_NAME)
+
+
+
 	
 	
 
