@@ -38,9 +38,11 @@ print: ## print
 git-clone:
 	mkdir -p $(LIB_FSPATH)
 	cd $(LIB_FSPATH) && cd .. && rm -rf $(LIB_NAME) && git clone ssh://git@$(LIB).git
-	#cd $(LIB_FSPATH) && git checkout $(LIB_BRANCH)
+git-clone-master: git-clone ## git-clone-master
+	cd $(LIB_FSPATH) && git checkout $(LIB_BRANCH)
+	cd $(LIB_FSPATH) && git status
+git-clone-tag: git-clone ## git-clone-tag
 	cd $(LIB_FSPATH) && git checkout tags/$(LIB_TAG)
-
 	cd $(LIB_FSPATH) && git status
 git-pull:
 	cd $(LIB_FSPATH) && git pull

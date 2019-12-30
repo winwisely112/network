@@ -1,8 +1,8 @@
-# https://github.com/go-gitea/gitea
+# https://github.com/go-gitea/gitea/tree/v1.10.1
 LIB_NAME=gitea
 LIB=github.com/go-gitea/$(LIB_NAME)
 LIB_BRANCH=master
-LIB_TAG=v1.9.5
+LIB_TAG=v1.10.1
 LIB_FSPATH=$(GOPATH)/src/$(LIB)
 
 GO111MODULE=on
