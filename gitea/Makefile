@@ -88,6 +88,8 @@ local-dep:
 local-build: ## local-build
 	cd $(LIB_FSPATH) && TAGS="bindata" make generate all
 
+	# where ?
+
 local-run: ## local-run
 	cd $(LIB_FSPATH) && ./gitea web
 local-open:
