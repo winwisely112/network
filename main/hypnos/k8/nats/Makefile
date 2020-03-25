@@ -7,7 +7,7 @@ YELLOW := $(shell tput -Txterm setaf 3)
 WHITE  := $(shell tput -Txterm setaf 7)
 RESET  := $(shell tput -Txterm sgr0)
 
-.PHONY: help minio-setup
+.PHONY: help nats-setup
 	
 ## Show help
 help:
@@ -28,11 +28,14 @@ help:
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
 
-## minio install
-minio-setup:
-	@kubectl apply -f ingress.yaml
-	@kubectl apply -f minio-operator.yaml
-	@kubectl apply -f minioinstance.yaml
-	@export ACCESS_KEY=$$(openssl rand -base64 32)
-	@export SECRET_KEY=$$(openssl rand -base64 32)
-	@kubectl create secret generic minio-creds-secret --from-literal=accesskey='$$ACCESS_KEY' --from-literal=secretkey='$$SECRET_KEY'
+## nats install
+nats-setup:
+	# Install NATS Operator on default namespace
+	@kubectl apply -f https://github.com/nats-io/nats-operator/releases/download/v0.5.0/00-prereqs.yaml
+	@kubectl apply -f https://github.com/nats-io/nats-operator/releases/download/v0.5.0/10-deployment.yaml
+
+	# Install NATS Streaming Operator on default namespace
+	@kubectl apply -f https://raw.githubusercontent.com/nats-io/nats-streaming-operator/master/deploy/default-rbac.yaml
+	@kubectl apply -f https://raw.githubusercontent.com/nats-io/nats-streaming-operator/master/deploy/deployment.yaml
+	@kubectl apply -f nats-cluster.yaml
+	@kubectl get natsstreamingcluster.streaming.nats.io
