@@ -16,9 +16,6 @@ This documention covers all the steps needed for running the project on a kubern
 - Ingress Controller
   - Nginx Ingress Controller
   - Static IP
-- Tools
-  - cert-manager
-  - Helm
 
 ### Create a Google Cloud Account
 First things first, go to https://cloud.google.com/ to sign up for a Google Cloud account if you do not already have one. If you already have an account, sign in, otherwise click ‘Get Started for Free’ and create a new account. Sign in and go to console Home.
@@ -159,52 +156,4 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/ngin
 Set the static IP to ingress-nginx serivce:
 ```
 kubectl --namespace ingress-nginx patch svc ingress-nginx -p "{\"spec\": {\"loadBalancerIP\": \"$GKE_IP\"}}"
-```
-
-## Tools
-We need some additional tools:
-### cert-manager
-Create a namespace to run cert-manager in:
-```
-$ kubectl create namespace cert-manager
-```
-Install the CustomResourceDefinitions and cert-manager itself:
-```
-$ kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.0/cert-manager.yaml
-```
-For RBAC:
-```
-kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value core/account)
-```
-Also create a production issuer and deploy it. You will need to update this example and add in your own email address:
-```
-   apiVersion: cert-manager.io/v1alpha2
-   kind: Issuer
-   metadata:
-     name: letsencrypt-prod
-   spec:
-     acme:
-       # The ACME server URL
-       server: https://acme-v02.api.letsencrypt.org/directory
-       # Email address used for ACME registration
-       email: user@example.com
-       # Name of a secret used to store the ACME account private key
-       privateKeySecretRef:
-         name: letsencrypt-prod
-       # Enable the HTTP-01 challenge provider
-       solvers:
-       - http01:
-           ingress:
-             class: nginx
-```
-```
-kubectl create --edit -f https://cert-manager.io/docs/tutorials/acme/example/production-issuer.yaml
-```
-
-### Helm
-Helm has an installer script that will automatically grab the latest version of Helm and install it locally.
-```
-$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-$ chmod 700 get_helm.sh
-$ ./get_helm.sh
 ```

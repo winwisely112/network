@@ -10,8 +10,8 @@ RESET  := $(shell tput -Txterm sgr0)
 GKE_ZONE ?= europe-west3-a
 GKE_REGION ?= europe-west3
 
-.PHONY: help build prepare flu-web-run flu-mob-run clean
-
+.PHONY: help gcloud-setup gke-setup gke-create gke-vars
+	
 ## Show help
 help:
 	@echo ''
@@ -34,8 +34,6 @@ help:
 # Follow these sections on README file
 # - Create a Google Cloud Account
 # - Create a Project
-# - Install Google Cloud SDK
-# - Initialize Google Cloud SDK
 # then run these commands:
 #  $ make gke-setup
 #  $ make gke-create
@@ -49,8 +47,13 @@ ifndef GKE_EMAIL
 	$(error define GKE_EMAIL environment variable)
 endif
 
+## gcloud install
+gcloud-setup:
+	@curl https://sdk.cloud.google.com | bash
+	@gcloud init
+
 ## GKE configuration
-gke-setup: check-env
+gke-setup: check-env gcloud-setup
 	@gcloud projects add-iam-policy-binding ${GKE_PROJECT} --member user:${GKE_USER} --role roles/iam.serviceAccountKeyAdmin
 	@mkdir -p ~/.getcouragenow/
 	@gcloud config set project ${GKE_PROJECT}
@@ -75,3 +78,8 @@ gke-vars:
 	@echo "GKE_KEY: "
 	@echo $$(cat  ~/.getcouragenow/${GKE_PROJECT}.json | base64 -w0)
 
+## GKE ingress setup
+gke-ingress-setup:
+	@kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
+	@kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
+	@kubectl --namespace ingress-nginx patch svc ingress-nginx -p "{\"spec\": {\"loadBalancerIP\": \"$$(gcloud compute addresses describe ${GKE_PROJECT}-static-ip --region ${GKE_REGION} | grep "address:" | cut -d ':' -f2)\"}}"
