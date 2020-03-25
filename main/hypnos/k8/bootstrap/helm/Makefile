@@ -7,9 +7,6 @@ YELLOW := $(shell tput -Txterm setaf 3)
 WHITE  := $(shell tput -Txterm setaf 7)
 RESET  := $(shell tput -Txterm sgr0)
 
-GKE_ZONE ?= europe-west3-a
-GKE_REGION ?= europe-west3
-
 .PHONY: help helm-setup
 	
 ## Show help
