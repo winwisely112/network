@@ -6,9 +6,15 @@ We can kill many birds with one stone by using a CMS base
 - go-admin is admin web ui for it
 - buttercms is a flutter cms
 
+
+
 ## Server
 https://github.com/GoAdminGroup/go-admin
 - can make this replace butter cms ?
+- Storage
+	- https://github.com/GoAdminGroup/go-admin/blob/master/go.mod#L15
+	- can use ks3 sqlite driver: https://github.com/rancher/kine/tree/master/pkg/drivers/dqlite
+		- so will have a global HA.
 
 ## Clients
 buttercsm 
