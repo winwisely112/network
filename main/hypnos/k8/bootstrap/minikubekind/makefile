@@ -92,6 +92,8 @@ dep:
 	gcloud config
 	# winwisely99-gitea
 
+	# add kind ...
+
 ## minikube-boot
 minikube-boot:
 	
@@ -99,8 +101,8 @@ minikube-boot:
 	# for istio
 	minikube start --memory=16384 --cpus=4 --kubernetes-version=v1.14.2 
 
-	#  for load balancing ( different terminal)
-	minikube tunnel 
+	# for load balancing ( different terminal)
+	minikube tunnel
 
 	# for dash ( different terminal)
 	#minikube dashboard
@@ -133,17 +135,16 @@ minikube-smoke:
 	kubectl expose deployment hello-minikube --type=NodePort --port=8080
 	kubectl get pod
 
+kind-boot:
 
-	
+kind-stop:
+
 kind-smoke:
 
-kind-smoke-cleanup:
 
 
 ## Dep
 dep-helm:
-	
-
 	helm repo add bitnami https://charts.bitnami.com/bitnami
 	# Helm 2 command
 	#helm install --name kubeapps --namespace kubeapps bitnami/kubeapps
