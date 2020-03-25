@@ -27,3 +27,29 @@ Helm of : MINIO, NATS, REDIS (TCPIP), TSDB
 6. Make file to open the CLI and Web tools for accessing the Cluster management tools and metrics, logging tools !
 
 ALL this is so that we are REPEATABLE and DECOUPLED properly so anyone can bring up a cluster !!!! 
+
+## IAAS
+
+https://github.com/weaveworks/ignite
+
+ARM:
+https://github.com/weaveworks/ignite/search?q=arm&unscoped_q=arm
+
+https://github.com/weaveworks/ignite/blob/master/docs/installation.md
+
+https://github.com/weaveworks/ignite/blob/master/docs/cloudprovider.md
+
+https://github.com/weaveworks/wks-quickstart-firekube
+
+https://github.com/inlets/inlets#stretch-goals
+
+https://github.com/weaveworks/wks-quickstart-firekube
+
+CoreOS Fork:
+https://www.flatcar-linux.org/releases/
+
+Packet Roadmap:
+https://www.packet.com/developers/roadmap/
+
+Packet Github:
+https://github.com/packethost
