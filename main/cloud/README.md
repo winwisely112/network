@@ -1,9 +1,5 @@
 # cloud
 
-
-## accounts
-hypnos.cloud.ops@gmail.com
-
 # icon
 
 take the google logo and mix it with the HAL 9000 logo.
