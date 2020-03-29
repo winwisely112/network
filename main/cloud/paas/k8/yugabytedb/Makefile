@@ -44,14 +44,17 @@ yugabyte-setup:
 	@helm history yugabyte -n yugabyte
 
 ## yugabyte connect
+# Yes needed
 yugabyte-connect-ysql:
 	@kubectl exec -n yugabyte -it yb-tserver-0 /home/yugabyte/bin/ysqlsh -- -h yb-tserver-0.yb-tservers.yugabyte
 
 ## yugabyte connect ycql
+# NOT NEEDED !
 yugabyte-connect-ycql:
 	@kubectl exec -n yugabyte -it yb-tserver-0 /home/yugabyte/bin/cqlsh yb-tserver-0.yb-tservers.yugabyte
 
 ## redis cli
+# YES needed
 redis-cli:
 	@kubectl --namespace yugabyte run redis-cli -it --image redis --command -- redis-cli -h yb-tserver-service
 
