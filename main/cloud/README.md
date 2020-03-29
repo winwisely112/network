@@ -13,8 +13,6 @@ https://www.google.com/imgres?imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipe
 
 
 
-
-
 # gke
 
 knative with istio

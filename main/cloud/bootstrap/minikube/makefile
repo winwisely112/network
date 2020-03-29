@@ -95,9 +95,9 @@ dep:
 ## minikube-boot
 minikube-boot:
 	
-	#minikube start
+	minikube start
 	# for istio
-	minikube start --memory=16384 --cpus=4 --kubernetes-version=v1.14.2 
+	#minikube start --memory=16384 --cpus=4 --kubernetes-version=v1.14.2 
 
 	#  for load balancing ( different terminal)
 	minikube tunnel 
