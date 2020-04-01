@@ -36,3 +36,9 @@ minio-setup:
 	@export ACCESS_KEY=$$(openssl rand -base64 32)
 	@export SECRET_KEY=$$(openssl rand -base64 32)
 	@kubectl create secret generic minio-creds-secret --from-literal=accesskey='$$ACCESS_KEY' --from-literal=secretkey='$$SECRET_KEY'
+
+minio-keys:
+	@echo "\naccess key: "
+	@kubectl get secret minio-creds-secret -o yaml | grep accesskey | cut -d':' -f2 | tr -d ' ' | base64 -d
+	@echo "\nsecret key: "
+	@kubectl get secret minio-creds-secret -o yaml | grep secretkey | cut -d':' -f2 | tr -d ' ' | base64 -d
